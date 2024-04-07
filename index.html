@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Race Results</title>
+<script>
+
+    class Car {
+        constructor(brand, model, year, color, price, gas) {
+            this.brand = brand;
+            this.model = model;
+            this.year = year;
+            this.color = color;
+            this.price = price;
+            this.gas = gas;
+        }
+
+        honk() {    
+            let carDetails = document.getElementById("carDetails");
+
+            let carDetail = document.createElement("p");
+            carDetail.textContent = `Tuut tuut || Brand: ${this.brand} | Model: ${this.model} | Year: ${this.year} | Color: ${this.color} | Price: ${this.price}`;
+            
+            carDetails.appendChild(carDetail);
+        }
+
+        gasLoss() {
+            let gasLoss = 5;
+            if (this.year !== 2024) {
+                gasLoss += 2024 - this.year;
+            }
+            this.gas -= gasLoss;
+        }
+    }
+
+    const cars = [
+        new Car("Honda", "CR-V", 2023, "Red", 50000, 45),
+        new Car("Ford", "F-150", 2020, "Black", 25000, 30),
+        new Car("BMW", "X5", 2022, "Green", 60000, 65),
+        new Car("Mazda", "CX-5", 2019, "White", 15000, 60),
+        new Car("Audi", "Q7", 2018, "Silver", 52000, 47),
+        new Car("Kia", "Forte", 2020, "Blue", 21000, 56)
+    ];
+
+    function callHonk() {
+        cars.forEach(car => {
+            car.honk();
+        });
+    }
+
+    
+    window.onload = function() {
+        callHonk();
+      };
+
+    function race() {
+        let raceOutput = document.getElementById("raceOutput");
+        raceOutput.innerHTML = '';
+
+        for (let turn = 1; turn <= 7; turn++) {
+            let turnHead = document.createElement("h3");
+            turnHead.textContent = `Turn ${turn}`;
+            raceOutput.appendChild(turnHead);
+
+            cars.forEach(car => {
+                car.gasLoss();
+                let carInfo = document.createElement("p");
+                carInfo.textContent = `| ${car.brand} ${car.model} | ${car.gas} liters remaining`;
+                raceOutput.appendChild(carInfo);
+            });
+        }
+    }
+</script>
+</head>
+<body>
+<h1 style="text-align: center;">Car Race</h1>
+
+<h2>Before Race</h2>
+<div id="carDetails"></div>
+
+<h2>Race Results</h2>
+<div id="raceOutput"></div>
+
+<button onclick="race()">Start Race</button>
+
+</body>
+</html>
